@@ -1,7 +1,6 @@
 from openai import OpenAI
 # 1.获取client客户端对象,OenAI对象
 client : OpenAI = OpenAI(
-  api_key="sk-1a60e37ca4434f41ba71d8e11d0b4e60",
   base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"
 )
 # 2.创建模型
