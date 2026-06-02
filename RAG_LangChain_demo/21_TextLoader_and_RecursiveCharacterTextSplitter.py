@@ -3,7 +3,6 @@ from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 # 文本读取器
-loader = TextLoader("data/Python", encoding="utf-8")
 
 # 分割器
 splitter = RecursiveCharacterTextSplitter(chunk_size=100, chunk_overlap=10, separators=["\n\n", "\n", "\t", " "],
@@ -17,7 +16,6 @@ for split_document in splitter.split_documents(load):
     print("---------------------------------------------------------------------------------------------------------")
 
 
-loader = TextLoader("data/Python", encoding="utf-8")
 splitter = RecursiveCharacterTextSplitter(
     chunk_size=100,  # 分块大小
     chunk_overlap=50,  # 重叠长度
