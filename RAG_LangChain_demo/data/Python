@@ -1,0 +1,24 @@
+# Python 文本处理知识点小结
+## 1. 文本读取写入
+1. `open(路径, r/w/a, encoding='utf-8')`
+    - r：只读；w：清空重写；a：末尾追加
+    - with 自动关闭文件，不用手动 close
+2. 读取：`f.read()`全读、`readline()`单行、`readlines()`按行列表
+3. json读写
+    - `json.load(f)` 文件→字典/列表
+    - `json.dump(data,f,ensure_ascii=False)` 对象写入文件
+
+## 2. 字符串基础
+- 切片：`s[start:end:step]`
+- 常用：split分割、join拼接、strip去首尾空格、replace替换
+
+## 3. 结构化文本
+1. csv：逗号分隔文本，可手动split(',')拆分每行字段
+2. json：标准结构化文本，嵌套字典/列表，不能直接分行读取
+
+## 4. 简单文本提取思路
+1. 读取全部文本
+2. 按分隔符/换行切割
+3. 遍历列表提取需要字段
+
+需要我顺便给一段简易提取代码模板吗？
