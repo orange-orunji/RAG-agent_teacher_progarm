@@ -39,7 +39,7 @@ def get_string_md5(input_str: str, encoding ="utf-8"):
     return md5_hash.hexdigest()
 
 class KnowledgeBaseService:
-    def __init__(self,data,filename):
+    def __init__(self):
         self.chroma = Chroma(
             embedding_function=DashScopeEmbeddings(),
             persist_directory=config.chroma_path,
@@ -50,8 +50,6 @@ class KnowledgeBaseService:
             chunk_overlap=config.spliter_overlap,
             separators=config.separators
         )
-        self.data = data
-        self.filename = filename
 
     def upload_by_str(self,data : str,filename):
 
