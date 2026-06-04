@@ -10,3 +10,6 @@ spliter_size = 1000
 spliter_overlap = 50
 spliter_max_chunk_size = 1000
 separators=["\n\n", "\n", "\t", " ","",".",",","!","?",";","。","，"]
+
+# vector
+vector_num = 2
