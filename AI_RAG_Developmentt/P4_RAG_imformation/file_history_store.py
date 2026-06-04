@@ -1,9 +1,8 @@
-# 长期会话记忆实现 使用本地文件读取存储数据来实现
 import json
 import os
 
 from langchain_core.chat_history import BaseChatMessageHistory
-from langchain_core.messages import BaseMessage, messages_from_dict, HumanMessage, message_to_dict
+from langchain_core.messages import BaseMessage, message_to_dict, messages_from_dict
 
 
 class FileChatHistory(BaseChatMessageHistory):
@@ -45,15 +44,5 @@ class FileChatHistory(BaseChatMessageHistory):
         with open(self.file_path,"w",encoding="utf-8") as f:
             json.dump([],f)
 
-def print_prompt(full_prompt):
-    print("="*20,full_prompt.to_string(),"="*20)
-    return full_prompt
-
 def get_history(session_id):
     return FileChatHistory(session_id, "./chat_history")
-
-if __name__ == '__main__':
-    history = FileChatHistory("test", "./storage")
-    history.add_message(HumanMessage(content="hello"))
-    print(history.messages.__str__())
-    history.clear()
