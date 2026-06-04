@@ -40,8 +40,13 @@ def get_string_md5(input_str: str, encoding ="utf-8"):
 
 class KnowledgeBaseService:
     def __init__(self):
+        import os
+        os.makedirs(config.chroma_path, exist_ok=True)
+        
         self.chroma = Chroma(
-            embedding_function=DashScopeEmbeddings(),
+            embedding_function=DashScopeEmbeddings(
+                dashscope_api_key=os.getenv("DASHSCOPE_API_KEY")
+            ),
             persist_directory=config.chroma_path,
             collection_name=config.chroma_name
         )
@@ -64,10 +69,11 @@ class KnowledgeBaseService:
         else:
             self_spliter_split_text = [data]
 
+        # 使用英文元数据，避免中文编码问题
         message = {
-            "source": filename,
+            "source": filename.encode('utf-8').decode('ascii', errors='ignore'),
             "create_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "operator": "orunji"
+            "operator": "system"
         }
 
         self.chroma.add_texts(self_spliter_split_text,metadatas=[message for _ in range(len(self_spliter_split_text))])
