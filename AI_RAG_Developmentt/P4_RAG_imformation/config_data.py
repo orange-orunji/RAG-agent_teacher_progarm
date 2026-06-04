@@ -13,3 +13,7 @@ separators=["\n\n", "\n", "\t", " ","",".",",","!","?",";","。","，"]
 
 # vector
 vector_num = 2
+
+# model
+embedding = "text-embedding-v1"
+chat_model = "qwen-max"

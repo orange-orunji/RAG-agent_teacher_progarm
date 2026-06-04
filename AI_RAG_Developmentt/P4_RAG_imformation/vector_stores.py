@@ -3,7 +3,7 @@ from langchain_chroma import Chroma
 import config_data as config
 
 class VectorStoreServer:
-    def __init__(self,embedding_model: DashScopeEmbeddings):
+    def __init__(self,embedding_model):
         self.embedding = embedding_model
 
         self.chroma = Chroma(
