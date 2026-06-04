@@ -2,7 +2,8 @@
 import hashlib
 import os.path
 
-from config_data import md5_path
+import config_data as config
+from datetime import datetime
 from langchain_chroma import Chroma
 from langchain_community.embeddings import DashScopeEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -41,12 +42,40 @@ class KnowledgeBaseService:
     def __init__(self,data,filename):
         self.chroma = Chroma(
             embedding_function=DashScopeEmbeddings(),
-            persist_directory="./data/storage/chroma_db",
-            collection_name="chroma_db"
+            persist_directory=config.chroma_path,
+            collection_name=config.chroma_name
         )
-        self.spliter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=0)
+        self.spliter = RecursiveCharacterTextSplitter(
+            chunk_size=config.spliter_size,
+            chunk_overlap=config.spliter_overlap,
+            separators=config.separators
+        )
         self.data = data
         self.filename = filename
+
+    def upload_by_str(self,data : str,filename):
+
+        # 获得当前数据的md5值
+        md_5_value = get_string_md5(data)
+        if check_md5(config.md5_path, md_5_value):
+            return ["[Pass]数据上传失败,该数据已存在"]
+
+        # 判断文件大小是否需要分割
+        if len(data) > config.spliter_max_chunk_size:
+            self_spliter_split_text: list = self.spliter.split_text(data)
+        else:
+            self_spliter_split_text = [data]
+
+        message = {
+            "source": filename,
+            "create_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "operator": "orunji"
+        }
+
+        self.chroma.add_texts(self_spliter_split_text,metadatas=[message for _ in range(len(self_spliter_split_text))])
+        save_md5(config.md5_path,md_5_value)
+        return ["[Success]数据上传成功"]
+
 if __name__ == '__main__':
     # print(get_string_md5("周杰伦"))
     # print(get_string_md5("周杰伦"))
@@ -54,4 +83,4 @@ if __name__ == '__main__':
 
     # save_md5(md5_path, get_string_md5("周杰伦"))
 
-    print(check_md5(md5_path, get_string_md5("周杰伦")))
+    print(check_md5(config.md5_path, get_string_md5("周杰伦")))
