@@ -25,4 +25,4 @@ if file_uploader is not None:
     with sl.spinner("thinking..."):
         time.sleep(1)
         result = sl.session_state["servers"].upload_by_str(file_value.decode("utf-8"), file_name)
-        sl.write(result)
+        sl.success(result[0])

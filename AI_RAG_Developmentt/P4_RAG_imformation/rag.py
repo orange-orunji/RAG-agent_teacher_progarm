@@ -11,12 +11,12 @@ from langchain_core.runnables import RunnablePassthrough, RunnableLambda
 import os
 
 import config_data as config
-from AI_RAG_Developmentt.P4_RAG_imformation.vector_stores import VectorStoreServer
+from vector_stores import VectorStoreServer
 
 
 class RAGService:
     def __init__(self):
-        self.model = ChatTongyi(model=config.chat_model)
+        self.model = ChatTongyi(model=config.chat_model,streaming=True)
         
         self.embedding = DashScopeEmbeddings(
             dashscope_api_key=os.getenv("DASHSCOPE_API_KEY")
@@ -60,6 +60,7 @@ class RAGService:
             input_messages_key="input",
             history_messages_key="history"
         )
+        self.stream_chain = chain
         return conversation_chain
 
 

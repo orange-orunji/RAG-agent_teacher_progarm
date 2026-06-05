@@ -17,3 +17,6 @@ vector_num = 2
 # model
 embedding = "text-embedding-v1"
 chat_model = "qwen-max"
+
+# session
+session_id = "user_0001"
