@@ -21,7 +21,7 @@ for message in session_state["message"]:
         st.write(message["content"])
 
 
-prompt = st.chat_input("请输入文本", key="question")
+prompt = st.chat_input("question", key="question")
 
 configss = {"configurable": {"session_id": config.session_id}}
 if prompt:
